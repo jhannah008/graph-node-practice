@@ -72,6 +72,18 @@ class Graph {
       // use spread operator to spread 'neighbor' values into the queue
       queue.push(...adjList[value]);
     }
+    return resLi;
+  }
+
+  depthFirstTraversal(value, visited = new Set(), resLi = []) {
+    if (visited.has(value)) return;
+    const adjList = this.adjList();
+    visited.add(value);
+    resLi.push(value);
+    adjList[value].forEach((neighbor) =>
+      this.depthFirstTraversal(neighbor, visited, resLi)
+    );
+    return resLi;
   }
 }
 
@@ -92,3 +104,6 @@ graph.addEdge("a", "b");
 graph.addEdge("a", "c");
 graph.addEdge("a", "d");
 graph.addEdge("d", "g");
+
+console.log(graph.breadthFirstTraversal("a"));
+console.log(graph.depthFirstTraversal("a"));
